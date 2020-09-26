@@ -17,13 +17,13 @@ pub fn plot_min_max_time(
         .max_by(|x, y| x.tpcs.cmp(&y.tpcs))
         .unwrap()
         .tpcs as u128;
-    if maxval_tpcs > maxval {
-        maxval = maxval_tpcs
-    };
     // let abssum: f64 = tstat.iter().map(|x| x.tsum as f64).sum();
     let abscnt: f64 = tstat.iter().map(|x| x.tpcs as f64).sum();
     //    let pcsmultiply = tstat.len() as f64*abssum/abscnt/abscnt * 3.;
-    let pcsmultiply = 10; // tízszerese a kiszolgálás/sec-nek
+    let pcsmultiply: i32 = 10; // tízszerese a kiszolgálás/sec-nek
+    if maxval_tpcs * pcsmultiply as u128 > maxval {
+        maxval = maxval_tpcs * pcsmultiply as u128;
+    };
 
     let root = BitMapBackend::new(fname, (1870, 1000)).into_drawing_area();
     root.fill(&WHITE)?;
